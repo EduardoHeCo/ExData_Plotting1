@@ -16,10 +16,23 @@ dtime<-strptime(paste(hhpc$Date,hhpc$Time,sep=""),"%d/%m/%Y%H:%M:%S")
 hhpc$Sub_metering_1<- as.numeric(hhpc$Sub_metering_1)
 hhpc$Sub_metering_2<- as.numeric(hhpc$Sub_metering_2)
 hhpc$Sub_metering_3<- as.numeric(hhpc$Sub_metering_3)
+hhpc$Voltage<- as.numeric(hhpc$Voltage)
+hhpc$Global_reactive_power<- as.numeric(hhpc$Global_reactive_power)
 
-
-
-
+png("plot4.png", width = 480, height = 480)
+par(mfrow=c(2,2), mar=c(4,4,2,1))
+with(hhpc,{
+  plot(dtime,hhpc$Global_active_power, type = "l", ylab = "Global Active Power")
+  plot(dtime,hhpc$Voltage,type="l",xlab="datetime",ylab="Voltage")
+  plot(dtime,hhpc$Sub_metering_1,type="l",ylab="Energy sub metering")
+  lines(dtime,hhpc$Sub_metering_2,col='Red')
+  lines(dtime,hhpc$Sub_metering_3,col='Blue')
+  legend("topright",col=c("black","red","blue"),
+         legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=1,lwd=2)
+  plot(dtime,hhpc$Global_reactive_power,type="l",xlab="datetime",ylab="Energy sub metering")
+  
+})
+dev.off()
 
 
 
